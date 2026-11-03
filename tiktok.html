@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TikTok Bağlantısı</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+</head>
+<body><main>
+<h1>TikTok bağlantısı</h1>
+<p id="msg" class="muted">Bu sayfa, Oto Video uygulamasının kendi TikTok hesaplarımıza bağlanması için kullanılır.</p>
+<p><button id="copy" hidden style="font:inherit;padding:10px 18px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg);cursor:pointer">Adresi kopyala</button></p>
+<nav><a href="index.html">Ana sayfa / Home</a><a href="gizlilik.html">Gizlilik / Privacy</a></nav>
+</main>
+<script>
+  const q = new URLSearchParams(location.search);
+  const msg = document.getElementById("msg"), btn = document.getElementById("copy");
+  if (q.get("code")) {
+    msg.textContent = "İzin verildi. Bu sayfanın adresini kopyalayıp bağlama aracına yapıştır (birkaç dakika geçerli).";
+    btn.hidden = false;
+    btn.onclick = () => navigator.clipboard.writeText(location.href).then(() => (btn.textContent = "Kopyalandı"));
+  } else if (q.get("error")) {
+    msg.textContent = "İzin verilmedi: " + (q.get("error_description") || q.get("error"));
+  }
+</script>
+</body>
+</html>
